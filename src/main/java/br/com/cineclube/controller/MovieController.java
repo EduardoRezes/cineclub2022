@@ -1,13 +1,16 @@
 package br.com.cineclube.controller;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.cineclube.dao.MovieRepository;
@@ -19,32 +22,57 @@ import br.com.cineclube.model.Movie;
 public class MovieController {
 
 	@Autowired
-	MovieRepository dao;
+	private MovieRepository dao;
 	
-	@RequestMapping("/save")
-	public String save(Model model) {
-		Movie avatar = new Movie("Avatar", Category.FICTION, LocalDate.of(2009, 10, 25),new BigDecimal(8.5));
+	
+	@PostMapping("/save")
+	public String save(@Valid Movie movie, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			return "redirect:/movies/manter.html";
+		}
+		dao.save(movie);
+		return "redirect:/filmes/list";
+	}
+	
+	@RequestMapping("/new")
+	public String newForm(Model model) {
 		
-		dao.save(avatar);
+		// objeto filme sera mapeado ao ${filme} da view
+		Movie filme = new Movie();
+		//lembre-se de que o apelido dado abaixo tem que ser o mesmo da view
+		//                  Apelido
+		model.addAttribute("filme", filme);
+		
+		// cria lista de categorias
+		model.addAttribute("categories", Category.values());
+		return "movies/manter.html";
+	}
+	
+	@RequestMapping("/delete/{id}")
+	public String delete(@PathVariable Long id, Model model) {
+		dao.deleteById(id);
+		return "redirect:/filmes/list";
+	}
+	
+	@RequestMapping("/list")
+	public String home(Model model) {
 		List<Movie> listMovies = dao.findAll();
 		model.addAttribute("listMovies", listMovies);
 		return "movies/listMovie.html";
 	}
 	
-	@RequestMapping("/new")
-	public String newForm() {
-		return "redirect: /movies/maintain.html";
+	@GetMapping(value = "/edit/{id}")
+	public String edit(@PathVariable Long id, Model model) {
+		Movie movie = dao.getById(id);
+		model.addAttribute("movie", movie);
+		
+		return "movies/manter.html";
 	}
 	
-	@RequestMapping("/delete/{id}")
-	public String delete(Model model) {
-		return "index.html";
-	}
-	
-	@RequestMapping("/home")
+	/*@RequestMapping("/")
 	public String home(Model model) {
-		Calendar cal = Calendar.getInstance();
-		model.addAttribute("today", cal.getTime());
-		return "index.html";
-	}
+		redirect retorna para um outro metodo, passando tudo que chega
+		 do // está enviando para o método list
+		return "redirect: /filmes/list";
+	}*/
 }

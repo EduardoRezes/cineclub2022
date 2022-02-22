@@ -1,0 +1,52 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head"></head>
+
+<body>
+	<!--  BARRA DE NAVEGACAO  -->
+
+	<head th:replace="fragments/header :: header"></head>
+	<main class="container">
+		<a class="btn btn-primary active mb-3" role="button" th:href="@{/filmes/new}">
+			<i class="bi bi-plus-square"></i>
+			Filme
+		</a>
+
+		<div class="bg-light p-5 rounded">
+			<div class="row">
+				<form th:object="${filme}" action="/filmes/save" method="POST">
+					<div class="col-8">
+						<label class="form-label" for="title">Title</label>
+						<input type="text" th:field="*{title}" class="form-control" placeholder="Nome do filme"
+							th:errorclass="inputError" autocomplete="off">
+						<span class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"> Titulo invalido</span>	
+					</div>
+					
+					<div class="col-1">
+						<label class="form-label" for="score">Score</label>
+						<input type="text" th:field="*{score}" class="form-control" placeholder="7.5"
+							autocomplete="off">
+						<span class="error" th.if="${#fields.hasErrors('score')}" th:errors="*{score}"> Score invalido</span>
+					</div>
+					<div class="col-8">
+						<label class="form-label" for="category">Category</label>
+						<select class="form-select" name='category'>
+						  	<option th:each="cat: ${categories}" th:value"${cat}" th:text="${cat}"/>
+						</select>
+					</div>
+					<div class="col-3">
+						<label class="form-label" for="release">Release</label>
+						<input type="date" th:field="*{release}" class="form-control" placeholder="YYYY/MM/dd"
+							autocomplete="off">
+					</iv>
+					<button class="btn btn-primary mt-3" type="submit">Submit</button>
+				</form>
+			</div>
+		</div>
+	</main>
+
+	<script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>
