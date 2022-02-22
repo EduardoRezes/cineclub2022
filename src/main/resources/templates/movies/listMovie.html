@@ -1,23 +1,16 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
-	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
-	<link th:href="@{/css/app.css}" rel="stylesheet" />
-
-	<title>CineClube</title>
-</head>
+<head th:replace="fragments/head :: head"></head>
 
 <body>
 	<!--  BARRA DE NAVEGACAO  -->
 
-	<head th:replace="fragments/header :: head"></head>
+	<head th:replace="fragments/header :: header"></head>
+
 	<!--  CONTEUDO DA PAGINA  -->
 	<main class="container">
-		<a class="btn btn-primary active" role="button" th:href="@{/filmes/new}">
+		<a class="btn btn-primary active mb-3" role="button" th:href="@{/filmes/new}">
 			<i class="bi bi-plus-square"></i>
 			Filme
 		</a>
@@ -27,12 +20,12 @@
 			<div class="row">
 				<form action="" method="POST">
 					<div class="mb-2">
-						<label class="form-label" for="categoria">Filtrar por categoria:
-							<span>CategoriaName</span></label>
+						<label class="form-label" for="category">Filtrar por categoria:
+							<span>Categoria Nome</span></label>
 					</div>
 					<div class="mb-2">
-						<select class="form-select" name="cat" required="required">
-							<option value="">Select category</option>
+						<select class="form-select" name='category'>
+						  	<option th:each="cat: ${categories}" th:value"${cat}" th:text="${cat}"/>
 						</select>
 					</div>
 					<div class="mb-4">
@@ -49,9 +42,11 @@
 						<tr>
 							<th>ID</th>
 							<th>Nome</th>
-							<th>Lançamento</th>
+							<th>Score</th>
 							<th>Categoria</th>
-							<th>#</th>
+							<th>Lançamento</th>					
+							<th>Delete</th>
+							<th>Edit</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -59,10 +54,14 @@
 						<tr th:each="movie: ${listMovies}">
 							<td th:text="${movie.id}" />
 							<td th:text="${movie.title}" />
-							<td th:text="${movie.release}" />
+							<td th:text="${movie.score}" />
 							<td th:text="${movie.category}" />
-							<td><a th:href="@{/movie/delete/{id}(id=${movie.id})}">
+							<td th:text="${movie.release}" />
+							<td><a th:href="@{/filmes/delete/{id}(id=${movie.id})}">
 									<i class="bi bi-dash-circle" title="delete"></i>
+								</a></td>
+							<td><a th:href="@{/filmes/edit/{id}(id=${movie.id})}">
+									<i class="bi bi-pencil-square" title="edit"></i>
 								</a></td>
 						</tr>
 					</tbody>
