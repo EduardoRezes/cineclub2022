@@ -28,7 +28,7 @@ public class MovieController {
 	@PostMapping("/save")
 	public String save(@Valid Movie movie, BindingResult result, Model model) {
 		if (result.hasErrors()) {
-			return "redirect:/movies/manter.html";
+			return "movies/manter.html";
 		}
 		dao.save(movie);
 		return "redirect:/filmes/list";
@@ -65,7 +65,7 @@ public class MovieController {
 	public String edit(@PathVariable Long id, Model model) {
 		Movie movie = dao.getById(id);
 		model.addAttribute("filme", movie);
-		
+		model.addAttribute("categories", Category.values());
 		return "movies/manter.html";
 	}
 	
