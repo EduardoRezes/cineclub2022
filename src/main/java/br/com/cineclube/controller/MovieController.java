@@ -58,6 +58,7 @@ public class MovieController {
 	public String home(Model model) {
 		List<Movie> listMovies = dao.findAll();
 		model.addAttribute("listMovies", listMovies);
+		model.addAttribute("categories", Category.values());
 		return "movies/listMovie.html";
 	}
 	
@@ -68,11 +69,4 @@ public class MovieController {
 		model.addAttribute("categories", Category.values());
 		return "movies/manter.html";
 	}
-	
-	/*@RequestMapping("/")
-	public String home(Model model) {
-		redirect retorna para um outro metodo, passando tudo que chega
-		 do // está enviando para o método list
-		return "redirect: /filmes/list";
-	}*/
 }
