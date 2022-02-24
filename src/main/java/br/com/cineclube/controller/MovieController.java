@@ -28,7 +28,7 @@ public class MovieController {
 	@PostMapping("/save")
 	public String save(@Valid Movie movie, BindingResult result, Model model) {
 		if (result.hasErrors()) {
-			return "redirect:/movies/manter.html";
+			return "movies/manter.html";
 		}
 		dao.save(movie);
 		return "redirect:/filmes/list";
@@ -58,21 +58,15 @@ public class MovieController {
 	public String home(Model model) {
 		List<Movie> listMovies = dao.findAll();
 		model.addAttribute("listMovies", listMovies);
+		model.addAttribute("categories", Category.values());
 		return "movies/listMovie.html";
 	}
 	
 	@GetMapping(value = "/edit/{id}")
 	public String edit(@PathVariable Long id, Model model) {
 		Movie movie = dao.getById(id);
-		model.addAttribute("movie", movie);
-		
+		model.addAttribute("filme", movie);		
+		model.addAttribute("categories", Category.values());
 		return "movies/manter.html";
 	}
-	
-	/*@RequestMapping("/")
-	public String home(Model model) {
-		redirect retorna para um outro metodo, passando tudo que chega
-		 do // está enviando para o método list
-		return "redirect: /filmes/list";
-	}*/
 }

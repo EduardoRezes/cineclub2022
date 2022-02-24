@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -23,6 +24,7 @@ public class Person {
 	@Size(min = 3, max = 50, message = "Campo deve conter entre {min} e {max} carácteres")
 	private String name;
 	
+	@Past
 	@NotNull(message = "Campo obrigatório")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birthday;
