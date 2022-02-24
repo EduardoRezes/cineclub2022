@@ -64,7 +64,7 @@ public class MovieController {
 	@GetMapping(value = "/edit/{id}")
 	public String edit(@PathVariable Long id, Model model) {
 		Movie movie = dao.getById(id);
-		model.addAttribute("movie", movie);
+		model.addAttribute("filme", movie);
 		
 		return "movies/manter.html";
 	}
