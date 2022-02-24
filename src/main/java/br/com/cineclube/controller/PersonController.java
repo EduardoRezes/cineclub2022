@@ -32,7 +32,7 @@ public class PersonController {
 	}
 
 	/* NEW PERSON */
-	@PostMapping("/new")
+	@RequestMapping("/new")
 	public String newPerson(Model model) {
 		Person p = new Person();
 		model.addAttribute("person", p);
@@ -41,9 +41,10 @@ public class PersonController {
 	
 	/* SAVE PERSON */
 	@PostMapping("/save")
-	public String save(@Valid Person person, BindingResult result, Model model) {
+	public String save(@Valid Person person, BindingResult result, Model model) {	
 		if (result.hasErrors()) {
-			return"person/manterPerson";
+			System.out.println("Passando aqui");
+			return"person/manterPerson.html";			
 		}
 		daoPerson.save(person);
 		return "redirect:/persons/list";
@@ -58,7 +59,7 @@ public class PersonController {
 	}
 	
 	/* DELETE PERSON */
-	@GetMapping("/delete/{id}")
+	@RequestMapping("/delete/{id}")
 	public String delete(@PathVariable Long id) {
 		daoPerson.deleteById(id);
 		return "redirect:/persons/list";
