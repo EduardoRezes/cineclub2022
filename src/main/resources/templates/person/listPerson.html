@@ -25,7 +25,8 @@
             <th>ID</th>
             <th>Nome</th>
             <th>Nascimento</th>
-            <th>#</th>
+            <th>Deletar</th>
+            <th>Editar</th>
           </tr>
         </thead>
 
@@ -38,6 +39,9 @@
             <td th:text="${{p.birthday}}"></td>
             <td><a th:href="@{/persons/delete/{id}(id=${p.id})}">
               <i class="bi bi-dash-circle" title="delete"></i>
+            </a></td>
+            <td><a th:href="@{/persons/edit/{id}(id=${p.id})}">
+              <i class="bi bi-pencil-square" title="edit"></i>
             </a></td>
           </tr>
         </tbody>
