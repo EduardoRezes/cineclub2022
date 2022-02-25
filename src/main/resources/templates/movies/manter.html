@@ -16,6 +16,7 @@
 		<div class="bg-light p-5 rounded">
 			<div class="row">
 				<form th:object="${filme}" action="/filmes/save" method="POST">
+					<input type="hidden" th:field="${filme.id}"/>
 					<div class="col-8">
 						<label class="form-label" for="title">Title</label>
 						<input type="text" th:field="*{title}" class="form-control" placeholder="Nome do filme"
