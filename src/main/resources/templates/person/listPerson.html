@@ -10,10 +10,27 @@
 
 	<!--  CONTEUDO DA PAGINA  -->
 	<main class="container">
-    <a class="btn btn-primary active mb-3" role="button" th:href="@{/persons/new}">
-      <i class="bi bi-plus-square"></i>
-      Pessoa
-    </a>
+	<div class="row">
+		<div class="col-sm">
+			<a class="btn btn-primary active mb-3" role="button" th:href="@{/persons/new}">
+		      <i class="bi bi-plus-square"></i>
+		      Pessoa
+		    </a>
+		</div>
+		<div class="col-sm">
+			 <form class="row" action="/persons/person">
+    			<div class="col-sm">
+    				<input type="text" name="name" class="form-control" placeholder="Nome" aria-label="Nome">
+				</div>
+				<div class="col-sm">
+					<button type="submit" class="btn btn-primary">Pesquisa Pessoa do TMDB</button>
+				</div>
+    		</form>
+		</div>
+	</div>
+    
+    
+   
 
     <div class="bg-light p-5 rounded">
       <div class="row">

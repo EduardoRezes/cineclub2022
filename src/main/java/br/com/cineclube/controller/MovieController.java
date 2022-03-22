@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.cineclube.dao.MovieRepository;
 import br.com.cineclube.model.Category;
-import br.com.cineclube.model.Movie;
+import br.com.cineclube.model.Filme;
 
 @Controller
 @RequestMapping("/filmes")
@@ -26,11 +26,11 @@ public class MovieController {
 	
 	
 	@PostMapping("/save")
-	public String save(@Valid Movie movie, BindingResult result, Model model) {
+	public String save(@Valid Filme filme, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "movies/manter.html";
 		}
-		dao.save(movie);
+		dao.save(filme);
 		return "redirect:/filmes/list";
 	}
 	
@@ -38,7 +38,7 @@ public class MovieController {
 	public String newForm(Model model) {
 		
 		// objeto filme sera mapeado ao ${filme} da view
-		Movie filme = new Movie();
+		Filme filme = new Filme();
 		//lembre-se de que o apelido dado abaixo tem que ser o mesmo da view
 		//                  Apelido
 		model.addAttribute("filme", filme);
@@ -56,7 +56,7 @@ public class MovieController {
 	
 	@RequestMapping("/list")
 	public String home(Model model) {
-		List<Movie> listMovies = dao.findAll();
+		List<Filme> listMovies = dao.findAll();
 		model.addAttribute("listMovies", listMovies);
 		model.addAttribute("categories", Category.values());
 		return "movies/listMovie.html";
@@ -64,8 +64,8 @@ public class MovieController {
 	
 	@GetMapping(value = "/edit/{id}")
 	public String edit(@PathVariable Long id, Model model) {
-		Movie movie = dao.getById(id);
-		model.addAttribute("filme", movie);		
+		Filme filme = dao.getById(id);
+		model.addAttribute("filme", filme);		
 		model.addAttribute("categories", Category.values());
 		return "movies/manter.html";
 	}
