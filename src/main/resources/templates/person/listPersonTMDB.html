@@ -1,0 +1,44 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head"></head>
+
+<body>
+	<!--  BARRA DE NAVEGACAO  -->
+
+	<head th:replace="fragments/header :: header"></head>
+
+	<main class="container-fluid">
+		<div class="bg-light p-5 rounded">
+			<h2>Consulta Pessoa TMDB</h2>
+			
+			<div class="d-flex flex-row">
+				<div th:object="${person}" action="/persons/person" method="GET">
+					<div class="flex-column">
+						<picture>
+	  						<img th:src="${person.profile_path}" class="img-fluid img-thumbnail" width="200">
+						</picture>
+						
+						<div class="flex-column">
+							<label class="form-label" for="name">Nome</label>
+							<input type="text" th:field="*{name}" class="form-control p-2" placeholder="Nome" aria-label="Nome" readonly="readonly">
+						</div>
+						<div class="flex-column">
+							<label class="form-label" for="popularity">Popularidade</label>
+							<input type="text" th:field="*{popularity}" class="form-control p-2" placeholder="popularity" aria-label="popularity" readonly="readonly">
+						</div>
+					</div>
+
+					<div class="mb-3 mt-3">
+						
+						<a href="/persons/list"><button type="button" class="btn btn-primary">Pessoas</button></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>
