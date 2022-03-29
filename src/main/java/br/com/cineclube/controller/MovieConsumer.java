@@ -46,7 +46,7 @@ public class MovieConsumer {
 		return res;
 	}
     
-    @GetMapping("/movie")
+    @GetMapping("/filme")
 	public Optional<Movie> searchByName(@RequestParam String title, @RequestParam String year) {
 		Map<String, String> params = new HashMap<>();
 		params.put("key", apiKey);
